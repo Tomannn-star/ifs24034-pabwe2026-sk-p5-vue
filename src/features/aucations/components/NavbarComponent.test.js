@@ -47,6 +47,17 @@ describe("NavbarComponent", () => {
     expect(fetchSpy).toHaveBeenCalled();
   });
 
+  it("should handle profile fetch error on mount silently", async () => {
+    const usersStore = useUsersStore();
+    usersStore.profile = null;
+    vi.spyOn(usersStore, "fetchProfile").mockRejectedValue(new Error("Fail"));
+
+    const wrapper = mount(NavbarComponent, {
+      global: { stubs: customStubs },
+    });
+    expect(wrapper.exists()).toBe(true);
+  });
+
   it("should handle logout when confirmed", async () => {
     const authStore = useAuthStore();
     const logoutSpy = vi.spyOn(authStore, "logout").mockResolvedValue();

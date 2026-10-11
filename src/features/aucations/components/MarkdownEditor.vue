@@ -32,22 +32,20 @@ let editorInstance = null;
 
 onMounted(() => {
   try {
-    if (editorEl.value) {
-      editorInstance = new Editor({
-        el: editorEl.value,
-        height: "250px",
-        initialEditType: "markdown",
-        previewStyle: "tab",
-        initialValue: props.modelValue,
-        events: {
-          change: () => {
-            const markdown = editorInstance.getMarkdown();
-            internalValue.value = markdown;
-            emit("update:modelValue", markdown);
-          },
+    editorInstance = new Editor({
+      el: editorEl.value,
+      height: "250px",
+      initialEditType: "markdown",
+      previewStyle: "tab",
+      initialValue: props.modelValue,
+      events: {
+        change: () => {
+          const markdown = editorInstance.getMarkdown();
+          internalValue.value = markdown;
+          emit("update:modelValue", markdown);
         },
-      });
-    }
+      },
+    });
   } catch (e) {
     fallbackMode.value = true;
   }

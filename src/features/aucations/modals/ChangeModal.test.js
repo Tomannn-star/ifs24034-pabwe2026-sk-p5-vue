@@ -93,6 +93,7 @@ describe("ChangeModal", () => {
     });
 
     await wrapper.find("input#edit_title").setValue("New Title");
+    await wrapper.find("input#edit_start_bid").setValue(50000);
     await wrapper.find("input#edit_closed_at").setValue("2026-10-10T12:00");
     await wrapper.find("[data-testid='desc-input']").setValue("New Desc");
     await wrapper.find("form").trigger("submit.prevent");

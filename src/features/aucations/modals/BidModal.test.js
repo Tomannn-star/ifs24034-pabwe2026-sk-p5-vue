@@ -45,6 +45,13 @@ describe("BidModal", () => {
     expect(wrapper.text()).toContain("50.000");
   });
 
+  it("should compute min bid based on default 0 when start_bid is absent and bids is empty", () => {
+    const wrapper = mount(BidModal, {
+      props: { aucation: { id: 3, bids: [] } },
+    });
+    expect(wrapper.text()).toContain("1.000");
+  });
+
   it("should handle cancel button click", async () => {
     const wrapper = mount(BidModal, {
       props: { aucation: dummyAucation },

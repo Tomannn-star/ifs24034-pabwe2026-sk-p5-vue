@@ -1,7 +1,4 @@
-export const BASE_URL =
-  typeof DELCOM_BASEURL !== "undefined"
-    ? DELCOM_BASEURL
-    : "https://open-api.delcom.org/api/v1";
+export const BASE_URL = DELCOM_BASEURL;
 
 const ACCESS_TOKEN_KEY = "accessToken";
 
@@ -28,7 +25,7 @@ export function putAccessToken(token) {
 export function buildUrl(endpoint, params) {
   const url = endpoint.startsWith("http")
     ? new URL(endpoint)
-    : new URL(endpoint.replace(/^\//, ""), BASE_URL.endsWith("/") ? BASE_URL : `${BASE_URL}/`);
+    : new URL(endpoint.replace(/^\//, ""), `${BASE_URL.replace(/\/+$/, "")}/`);
 
   if (params && typeof params === "object") {
     Object.entries(params).forEach(([key, value]) => {

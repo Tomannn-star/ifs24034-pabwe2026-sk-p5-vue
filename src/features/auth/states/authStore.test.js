@@ -105,4 +105,18 @@ describe("authStore", () => {
     expect(putTokenSpy).toHaveBeenCalledWith(null);
     expect(store.error).toBe("Server error");
   });
+
+  it("should handle login and register errors with empty error message", async () => {
+    const emptyErr = new Error("");
+    vi.spyOn(authApi, "loginApi").mockRejectedValue(emptyErr);
+    const errSpy = vi.spyOn(toolsHelper, "showErrorDialog").mockResolvedValue();
+
+    const store = useAuthStore();
+    await expect(store.login({ email: "user@test.com", password: "123" })).rejects.toThrow();
+    expect(errSpy).toHaveBeenCalledWith("Login gagal");
+
+    vi.spyOn(authApi, "registerApi").mockRejectedValue(emptyErr);
+    await expect(store.register({ name: "User", email: "user@test.com", password: "123" })).rejects.toThrow();
+    expect(errSpy).toHaveBeenCalledWith("Registrasi gagal");
+  });
 });

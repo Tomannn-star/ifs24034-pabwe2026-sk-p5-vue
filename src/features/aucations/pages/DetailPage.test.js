@@ -169,6 +169,7 @@ describe("DetailPage", () => {
 
     expect(wrapper.text()).toContain("Ditutup");
     expect(wrapper.text()).toContain("Belum ada penawaran untuk lelang ini.");
+    expect(wrapper.vm.sortedBids).toEqual([]);
   });
 
   it("should handle image error", async () => {
@@ -181,5 +182,80 @@ describe("DetailPage", () => {
     const img = wrapper.find("img");
     await img.trigger("error");
     expect(img.attributes("src")).toContain("unsplash.com");
+  });
+
+  it("should render loading state when isAucation is true and aucation is null", () => {
+    const aucStore = useAucationsStore();
+    aucStore.isAucation = true;
+    aucStore.aucation = null;
+
+    const wrapper = mount(DetailPage, {
+      global: { stubs: customStubs },
+    });
+
+    expect(wrapper.find("[data-testid='detail-loading']").exists()).toBe(true);
+  });
+
+  it("should handle profile fetch rejection and missing aucationId param", async () => {
+    mockParams = { aucationId: null };
+    const usrStore = useUsersStore();
+    usrStore.profile = null;
+    vi.spyOn(usrStore, "fetchProfile").mockRejectedValue(new Error("Profile fail"));
+
+    const aucStore = useAucationsStore();
+    const fetchSpy = vi.spyOn(aucStore, "fetchAucationDetail").mockResolvedValue();
+
+    const wrapper = mount(DetailPage, {
+      global: { stubs: customStubs },
+    });
+
+    await wrapper.vm.$nextTick();
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  it("should handle auction with null closed_at, null cover, and bids with fallback bid values", async () => {
+    const aucStore = useAucationsStore();
+    aucStore.aucation = {
+      id: 5,
+      user_id: 99,
+      title: "No Date No Cover Auction",
+      closed_at: null,
+      cover: null,
+      start_bid: null,
+      bids: [
+        { id: 1, bid: null, created_at: "2026-10-01" },
+        { id: 2, bid: null, created_at: "2026-10-02" },
+        { id: 3, bid: 200000, created_at: "2026-10-03" },
+        { id: 4, bid: 100000, created_at: "2026-10-04" },
+      ],
+    };
+
+    const wrapper = mount(DetailPage, {
+      global: { stubs: customStubs },
+    });
+
+    await wrapper.vm.$nextTick();
+    expect(wrapper.text()).toContain("Berlangsung");
+    expect(wrapper.find("img").attributes("src")).toBe("/default-auction.png");
+    expect(wrapper.vm.sortedBids).toHaveLength(4);
+  });
+
+  it("should handle empty bids and null start_bid", async () => {
+    const aucStore = useAucationsStore();
+    aucStore.aucation = {
+      id: 6,
+      user_id: 99,
+      title: "Zero Start Bid",
+      closed_at: null,
+      start_bid: null,
+      bids: [],
+    };
+
+    const wrapper = mount(DetailPage, {
+      global: { stubs: customStubs },
+    });
+
+    await wrapper.vm.$nextTick();
+    expect(wrapper.text()).toContain("Rp 0");
   });
 });

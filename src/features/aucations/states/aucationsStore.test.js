@@ -203,4 +203,39 @@ describe("aucationsStore", () => {
     const store = useAucationsStore();
     await expect(store.deleteAllAucations()).rejects.toThrow("Delete all fail");
   });
+
+  it("should handle empty error message in addAucation, changeAucation, changeCover, delete, addBid, deleteBid, deleteAll", async () => {
+    const emptyErr = new Error("");
+    const errSpy = vi.spyOn(toolsHelper, "showErrorDialog").mockResolvedValue();
+
+    const store = useAucationsStore();
+
+    vi.spyOn(aucationApi, "addAucationApi").mockRejectedValue(emptyErr);
+    await expect(store.addAucation({})).rejects.toThrow();
+    expect(errSpy).toHaveBeenCalledWith("Gagal membuat lelang");
+
+    vi.spyOn(aucationApi, "updateAucationApi").mockRejectedValue(emptyErr);
+    await expect(store.changeAucation(1, {})).rejects.toThrow();
+    expect(errSpy).toHaveBeenCalledWith("Gagal memperbarui lelang");
+
+    vi.spyOn(aucationApi, "changeCoverAucationApi").mockRejectedValue(emptyErr);
+    await expect(store.changeAucationCover(1, new FormData())).rejects.toThrow();
+    expect(errSpy).toHaveBeenCalledWith("Gagal memperbarui cover");
+
+    vi.spyOn(aucationApi, "deleteAucationApi").mockRejectedValue(emptyErr);
+    await expect(store.deleteAucation(1)).rejects.toThrow();
+    expect(errSpy).toHaveBeenCalledWith("Gagal menghapus lelang");
+
+    vi.spyOn(aucationApi, "addBidApi").mockRejectedValue(emptyErr);
+    await expect(store.addBid(1, {})).rejects.toThrow();
+    expect(errSpy).toHaveBeenCalledWith("Gagal mengajukan tawaran");
+
+    vi.spyOn(aucationApi, "deleteBidApi").mockRejectedValue(emptyErr);
+    await expect(store.deleteBid(1)).rejects.toThrow();
+    expect(errSpy).toHaveBeenCalledWith("Gagal membatalkan tawaran");
+
+    vi.spyOn(aucationApi, "deleteAllAucationsApi").mockRejectedValue(emptyErr);
+    await expect(store.deleteAllAucations()).rejects.toThrow();
+    expect(errSpy).toHaveBeenCalledWith("Gagal menghapus semua lelang");
+  });
 });

@@ -93,8 +93,18 @@ describe("ProfilePage", () => {
 
     const file = new File(["dummy"], "photo.png", { type: "image/png" });
     const fileInput = wrapper.find("input#photo");
+
+    // Empty files trigger
+    Object.defineProperty(fileInput.element, "files", {
+      value: [],
+      configurable: true,
+    });
+    await fileInput.trigger("change");
+
+    // Valid file trigger
     Object.defineProperty(fileInput.element, "files", {
       value: [file],
+      configurable: true,
     });
     await fileInput.trigger("change");
 
@@ -195,5 +205,24 @@ describe("ProfilePage", () => {
     const img = wrapper.find("img");
     await img.trigger("error");
     expect(img.attributes("src")).toContain("ui-avatars.com");
+  });
+
+  it("should show updating loading text when updating state is active", async () => {
+    const store = useUsersStore();
+    store.profile = dummyProfile;
+    store.isProfile = false;
+    store.isProfileUpdating = true;
+    store.isPhotoUpdating = true;
+    store.isPasswordUpdating = true;
+    vi.spyOn(store, "fetchProfile").mockImplementation(async () => {
+      store.isProfile = false;
+    });
+
+    const wrapper = mount(ProfilePage);
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.text()).toContain("Menyimpan...");
+    expect(wrapper.text()).toContain("Mengunggah...");
+    expect(wrapper.text()).toContain("Memproses...");
   });
 });

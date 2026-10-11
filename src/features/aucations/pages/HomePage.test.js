@@ -38,6 +38,22 @@ describe("HomePage", () => {
       start_bid: 1000,
       bids: [],
     },
+    {
+      id: 4,
+      title: "Fallback Bid Item",
+      description: "Test fallback bid and start_bid",
+      closed_at: null,
+      start_bid: null,
+      bids: [{ id: 99, bid: null }],
+    },
+    {
+      id: 5,
+      title: "Fallback Start Bid Only",
+      description: "Test fallback start_bid",
+      closed_at: null,
+      start_bid: null,
+      bids: [],
+    },
   ];
 
   it("should fetch aucations on mount and render list", async () => {

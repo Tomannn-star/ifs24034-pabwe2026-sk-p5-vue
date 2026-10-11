@@ -148,4 +148,23 @@ describe("usersStore", () => {
     await expect(store.updatePassword({})).rejects.toThrow("Password salah");
     expect(store.error).toBe("Password salah");
   });
+
+  it("should handle updateProfile, updatePhoto, and updatePassword with empty error message", async () => {
+    const emptyErr = new Error("");
+    const errSpy = vi.spyOn(toolsHelper, "showErrorDialog").mockResolvedValue();
+
+    const store = useUsersStore();
+
+    vi.spyOn(userApi, "updateProfileApi").mockRejectedValue(emptyErr);
+    await expect(store.updateProfile({ name: "Error" })).rejects.toThrow();
+    expect(errSpy).toHaveBeenCalledWith("Gagal memperbarui profil");
+
+    vi.spyOn(userApi, "changePhotoProfileApi").mockRejectedValue(emptyErr);
+    await expect(store.updatePhoto(new FormData())).rejects.toThrow();
+    expect(errSpy).toHaveBeenCalledWith("Gagal memperbarui foto");
+
+    vi.spyOn(userApi, "changePasswordApi").mockRejectedValue(emptyErr);
+    await expect(store.updatePassword({})).rejects.toThrow();
+    expect(errSpy).toHaveBeenCalledWith("Gagal mengubah kata sandi");
+  });
 });
