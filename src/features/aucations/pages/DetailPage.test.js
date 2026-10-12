@@ -17,11 +17,28 @@ vi.mock("vue-router", async () => {
   };
 });
 
+const dummyAucation = {
+  id: 1,
+  user_id: 1,
+  title: "Detail Auction Item",
+  cover: "img.png",
+  description: "Good condition",
+  start_bid: 1000000,
+  closed_at: "2026-12-31 23:59:59",
+  author: { name: "Toman" },
+  bids: [
+    { id: 10, bid: 1500000, created_at: "2026-10-01" },
+  ],
+  my_bid: { id: 10, bid: 1500000 },
+};
+
 describe("DetailPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     createMockPinia();
     mockParams = { aucationId: 1 };
+    const aucStore = useAucationsStore();
+    vi.spyOn(aucStore, "fetchAucationDetail").mockResolvedValue(dummyAucation);
   });
 
   const customStubs = {
@@ -38,21 +55,6 @@ describe("DetailPage", () => {
     BidModal: {
       template: "<button @click=\"$emit('close'); $emit('success')\" data-testid='close-bid'></button>",
     },
-  };
-
-  const dummyAucation = {
-    id: 1,
-    user_id: 1,
-    title: "Detail Auction Item",
-    cover: "img.png",
-    description: "Good condition",
-    start_bid: 1000000,
-    closed_at: "2026-12-31 23:59:59",
-    author: { name: "Toman" },
-    bids: [
-      { id: 10, bid: 1500000, created_at: "2026-10-01" },
-    ],
-    my_bid: { id: 10, bid: 1500000 },
   };
 
   it("should render owner actions and handle modals", async () => {

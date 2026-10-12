@@ -9,6 +9,8 @@ describe("ProfilePage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     createMockPinia();
+    const store = useUsersStore();
+    vi.spyOn(store, "fetchProfile").mockResolvedValue();
   });
 
   const dummyProfile = {

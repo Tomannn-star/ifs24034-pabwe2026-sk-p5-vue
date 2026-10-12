@@ -9,6 +9,8 @@ describe("HomePage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     createMockPinia();
+    const store = useAucationsStore();
+    vi.spyOn(store, "fetchAucations").mockResolvedValue();
   });
 
   const dummyAucations = [

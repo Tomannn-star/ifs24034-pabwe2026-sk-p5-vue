@@ -8,6 +8,8 @@ describe("UsersPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     createMockPinia();
+    const store = useUsersStore();
+    vi.spyOn(store, "fetchUsers").mockResolvedValue();
   });
 
   it("should fetch users on mount and render list", async () => {
