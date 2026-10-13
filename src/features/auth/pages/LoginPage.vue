@@ -5,9 +5,11 @@
 
     <form @submit.prevent="handleSubmit" class="space-y-4">
       <div>
-        <label for="email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+        <label for="login-email-input" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
         <input
-          id="email"
+          id="login-email-input"
+          name="email"
+          data-testid="login-email-input"
           type="email"
           v-model="email"
           required
@@ -17,9 +19,11 @@
       </div>
 
       <div>
-        <label for="password" class="block text-sm font-medium text-slate-700 mb-1">Kata Sandi</label>
+        <label for="login-password-input" class="block text-sm font-medium text-slate-700 mb-1">Kata Sandi</label>
         <input
-          id="password"
+          id="login-password-input"
+          name="password"
+          data-testid="login-password-input"
           type="password"
           v-model="password"
           required
@@ -29,6 +33,8 @@
       </div>
 
       <button
+        id="login-submit-button"
+        data-testid="login-submit-button"
         type="submit"
         :disabled="authStore.isAuthLogin"
         class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition disabled:opacity-50"

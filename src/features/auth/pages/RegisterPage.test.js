@@ -32,10 +32,11 @@ describe("RegisterPage", () => {
     const wrapper = mount(RegisterPage, {
       global: { stubs: customStubs },
     });
-    expect(wrapper.find("input#name").exists()).toBe(true);
-    expect(wrapper.find("input#email").exists()).toBe(true);
-    expect(wrapper.find("input#password").exists()).toBe(true);
-    expect(wrapper.find("input#confirmPassword").exists()).toBe(true);
+    expect(wrapper.find("input#register-name-input").exists()).toBe(true);
+    expect(wrapper.find("input#register-email-input").exists()).toBe(true);
+    expect(wrapper.find("input#register-password-input").exists()).toBe(true);
+    expect(wrapper.find("input#register-confirm-password-input").exists()).toBe(true);
+    expect(wrapper.find("button#register-submit-button").text()).toContain("Daftar Sekarang");
     expect(wrapper.text()).toContain("Masuk di sini");
   });
 
@@ -55,10 +56,10 @@ describe("RegisterPage", () => {
       global: { stubs: customStubs },
     });
 
-    await wrapper.find("input#name").setValue("Toman");
-    await wrapper.find("input#email").setValue("toman@delcom.org");
-    await wrapper.find("input#password").setValue("pass123");
-    await wrapper.find("input#confirmPassword").setValue("different");
+    await wrapper.find("input#register-name-input").setValue("Toman");
+    await wrapper.find("input#register-email-input").setValue("toman@delcom.org");
+    await wrapper.find("input#register-password-input").setValue("pass123");
+    await wrapper.find("input#register-confirm-password-input").setValue("different");
     await wrapper.find("form").trigger("submit.prevent");
 
     expect(errSpy).toHaveBeenCalledWith("Konfirmasi kata sandi tidak cocok!");
@@ -72,10 +73,10 @@ describe("RegisterPage", () => {
       global: { stubs: customStubs },
     });
 
-    await wrapper.find("input#name").setValue("Toman");
-    await wrapper.find("input#email").setValue("toman@delcom.org");
-    await wrapper.find("input#password").setValue("pass123");
-    await wrapper.find("input#confirmPassword").setValue("pass123");
+    await wrapper.find("input#register-name-input").setValue("Toman");
+    await wrapper.find("input#register-email-input").setValue("toman@delcom.org");
+    await wrapper.find("input#register-password-input").setValue("pass123");
+    await wrapper.find("input#register-confirm-password-input").setValue("pass123");
     await wrapper.find("form").trigger("submit.prevent");
 
     expect(regSpy).toHaveBeenCalledWith({
@@ -94,10 +95,10 @@ describe("RegisterPage", () => {
       global: { stubs: customStubs },
     });
 
-    await wrapper.find("input#name").setValue("Toman");
-    await wrapper.find("input#email").setValue("toman@delcom.org");
-    await wrapper.find("input#password").setValue("pass123");
-    await wrapper.find("input#confirmPassword").setValue("pass123");
+    await wrapper.find("input#register-name-input").setValue("Toman");
+    await wrapper.find("input#register-email-input").setValue("toman@delcom.org");
+    await wrapper.find("input#register-password-input").setValue("pass123");
+    await wrapper.find("input#register-confirm-password-input").setValue("pass123");
     await wrapper.find("form").trigger("submit.prevent");
 
     expect(mockPush).not.toHaveBeenCalled();

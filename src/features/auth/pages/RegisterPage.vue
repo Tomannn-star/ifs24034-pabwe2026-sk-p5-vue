@@ -5,9 +5,11 @@
 
     <form @submit.prevent="handleSubmit" class="space-y-4">
       <div>
-        <label for="name" class="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label>
+        <label for="register-name-input" class="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label>
         <input
-          id="name"
+          id="register-name-input"
+          name="name"
+          data-testid="register-name-input"
           type="text"
           v-model="name"
           required
@@ -17,9 +19,11 @@
       </div>
 
       <div>
-        <label for="email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+        <label for="register-email-input" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
         <input
-          id="email"
+          id="register-email-input"
+          name="email"
+          data-testid="register-email-input"
           type="email"
           v-model="email"
           required
@@ -29,9 +33,11 @@
       </div>
 
       <div>
-        <label for="password" class="block text-sm font-medium text-slate-700 mb-1">Kata Sandi</label>
+        <label for="register-password-input" class="block text-sm font-medium text-slate-700 mb-1">Kata Sandi</label>
         <input
-          id="password"
+          id="register-password-input"
+          name="password"
+          data-testid="register-password-input"
           type="password"
           v-model="password"
           required
@@ -41,9 +47,11 @@
       </div>
 
       <div>
-        <label for="confirmPassword" class="block text-sm font-medium text-slate-700 mb-1">Konfirmasi Kata Sandi</label>
+        <label for="register-confirm-password-input" class="block text-sm font-medium text-slate-700 mb-1">Konfirmasi Kata Sandi</label>
         <input
-          id="confirmPassword"
+          id="register-confirm-password-input"
+          name="confirmPassword"
+          data-testid="register-confirm-password-input"
           type="password"
           v-model="confirmPassword"
           required
@@ -53,6 +61,8 @@
       </div>
 
       <button
+        id="register-submit-button"
+        data-testid="register-submit-button"
         type="submit"
         :disabled="authStore.isAuthRegister"
         class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition disabled:opacity-50"

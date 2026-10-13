@@ -34,9 +34,9 @@ describe("LoginPage", () => {
         stubs: customStubs,
       },
     });
-    expect(wrapper.find("input#email").exists()).toBe(true);
-    expect(wrapper.find("input#password").exists()).toBe(true);
-    expect(wrapper.find("button[type='submit']").text()).toContain("Masuk");
+    expect(wrapper.find("input#login-email-input").exists()).toBe(true);
+    expect(wrapper.find("input#login-password-input").exists()).toBe(true);
+    expect(wrapper.find("button#login-submit-button").text()).toContain("Masuk");
     expect(wrapper.text()).toContain("Daftar sekarang");
   });
 
@@ -58,8 +58,8 @@ describe("LoginPage", () => {
       global: { stubs: customStubs },
     });
 
-    await wrapper.find("input#email").setValue("toman@delcom.org");
-    await wrapper.find("input#password").setValue("secret123");
+    await wrapper.find("input#login-email-input").setValue("toman@delcom.org");
+    await wrapper.find("input#login-password-input").setValue("secret123");
     await wrapper.find("form").trigger("submit.prevent");
 
     expect(loginSpy).toHaveBeenCalledWith({
@@ -77,8 +77,8 @@ describe("LoginPage", () => {
       global: { stubs: customStubs },
     });
 
-    await wrapper.find("input#email").setValue("toman@delcom.org");
-    await wrapper.find("input#password").setValue("wrong");
+    await wrapper.find("input#login-email-input").setValue("toman@delcom.org");
+    await wrapper.find("input#login-password-input").setValue("wrong");
     await wrapper.find("form").trigger("submit.prevent");
 
     expect(mockPush).not.toHaveBeenCalled();
