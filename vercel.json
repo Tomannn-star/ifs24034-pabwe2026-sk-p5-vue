@@ -14,11 +14,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "unload=()"
+          "value": "no-cache"
         },
         {
           "key": "X-Content-Type-Options",

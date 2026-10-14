@@ -70,7 +70,6 @@ export default defineConfig(({ mode }) => {
               if (id.includes("lucide-vue-next")) {
                 return "lucide";
               }
-              return "vendor";
             }
           },
         },
