@@ -7,7 +7,8 @@
     </div>
 
     <!-- Loading -->
-    <div v-if="aucationsStore.isAucation && !aucation" class="flex justify-center py-16" data-testid="detail-loading">
+    <div v-if="aucationsStore.isAucation && !aucation" class="flex flex-col items-center justify-center py-16" data-testid="detail-loading">
+      <h1 class="sr-only">Memuat Detail Lelang</h1>
       <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
     </div>
 

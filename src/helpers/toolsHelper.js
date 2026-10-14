@@ -1,6 +1,10 @@
-import Swal from "sweetalert2";
+async function getSwal() {
+  const module = await import("sweetalert2");
+  return module.default;
+}
 
-export function showSuccessDialog(message, title = "Berhasil!") {
+export async function showSuccessDialog(message, title = "Berhasil!") {
+  const Swal = await getSwal();
   return Swal.fire({
     icon: "success",
     title,
@@ -11,7 +15,8 @@ export function showSuccessDialog(message, title = "Berhasil!") {
   });
 }
 
-export function showErrorDialog(message, title = "Terjadi Kesalahan") {
+export async function showErrorDialog(message, title = "Terjadi Kesalahan") {
+  const Swal = await getSwal();
   return Swal.fire({
     icon: "error",
     title,
@@ -26,6 +31,7 @@ export async function showConfirmDialog(
   confirmButtonText = "Ya, Lanjutkan",
   cancelButtonText = "Batal"
 ) {
+  const Swal = await getSwal();
   const result = await Swal.fire({
     icon: "warning",
     title,

@@ -3,7 +3,7 @@
     <NavbarComponent @toggle-sidebar="sidebarOpen = !sidebarOpen" />
     <div class="flex-1 flex">
       <SidebarComponent :is-open="sidebarOpen" @close="sidebarOpen = false" />
-      <main class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+      <main id="main-content" role="main" class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
         <div class="max-w-7xl mx-auto">
           <RouterView />
         </div>
