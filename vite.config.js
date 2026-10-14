@@ -14,7 +14,7 @@ function inlineCssPlugin() {
       for (const [fileName, file] of Object.entries(ctx.bundle)) {
         if (fileName.endsWith(".css") && fileName.includes("index") && file.type === "asset") {
           const cssContent = typeof file.source === "string" ? file.source : file.source.toString();
-          const escaped = fileName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          const escaped = fileName.replace(/[.*+?^${}()|[\]\\]/g, `"\\$&"`);
           const regex = new RegExp(`<link[^>]*href=["'][^"']*${escaped}["'][^>]*>`, "i");
           if (regex.test(newHtml)) {
             newHtml = newHtml.replace(regex, `<style>${cssContent}</style>`);
