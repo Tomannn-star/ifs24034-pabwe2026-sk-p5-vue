@@ -3,6 +3,30 @@ import vue from "@vitejs/plugin-vue";
 import tailwindcss from "@tailwindcss/vite";
 import process from "process";
 
+function inlineCssPlugin() {
+  return {
+    name: "inline-css",
+    apply: "build",
+    enforce: "post",
+    transformIndexHtml(html, ctx) {
+      if (!ctx || !ctx.bundle) return html;
+      let newHtml = html;
+      for (const [fileName, file] of Object.entries(ctx.bundle)) {
+        if (fileName.endsWith(".css") && fileName.includes("index") && file.type === "asset") {
+          const cssContent = typeof file.source === "string" ? file.source : file.source.toString();
+          const escaped = fileName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          const regex = new RegExp(`<link[^>]*href=["'][^"']*${escaped}["'][^>]*>`, "i");
+          if (regex.test(newHtml)) {
+            newHtml = newHtml.replace(regex, `<style>${cssContent}</style>`);
+            delete ctx.bundle[fileName];
+          }
+        }
+      }
+      return newHtml;
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
@@ -16,6 +40,7 @@ export default defineConfig(({ mode }) => {
         },
       }),
       tailwindcss(),
+      inlineCssPlugin(),
     ],
     server: {
       port: Number(env.APP_PORT) || 3000,

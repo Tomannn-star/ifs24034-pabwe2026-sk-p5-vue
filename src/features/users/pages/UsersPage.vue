@@ -28,7 +28,7 @@
           @error="handleImgError"
         />
         <div class="flex-1 min-w-0">
-          <h3 class="font-semibold text-slate-900 truncate">{{ user.name }}</h3>
+          <h2 class="font-semibold text-slate-900 truncate">{{ user.name }}</h2>
           <p class="text-sm text-slate-500 truncate">{{ user.email }}</p>
           <span class="inline-block mt-1 text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full font-medium">
             Terdaftar: {{ formatDate(user.created_at) }}

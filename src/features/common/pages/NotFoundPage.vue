@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">
+  <main class="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">
     <div class="w-24 h-24 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-6">
       <span class="text-4xl font-extrabold">404</span>
     </div>
@@ -13,7 +13,7 @@
     >
       Kembali ke Beranda
     </RouterLink>
-  </div>
+  </main>
 </template>
 
 <script setup>

@@ -38,7 +38,7 @@
         <button
           type="button"
           @click="handleLogout"
-          class="p-2 text-rose-600 hover:bg-rose-50 rounded-lg transition"
+          class="p-2 text-rose-700 hover:text-rose-800 hover:bg-rose-50 rounded-lg transition"
           title="Keluar"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

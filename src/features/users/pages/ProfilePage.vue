@@ -20,7 +20,7 @@
         <div class="text-center sm:text-left flex-1">
           <h2 class="text-xl font-bold text-slate-900">{{ usersStore.profile?.name || '-' }}</h2>
           <p class="text-slate-600">{{ usersStore.profile?.email || '-' }}</p>
-          <p class="text-xs text-slate-400 mt-1">
+          <p class="text-xs text-slate-600 mt-1">
             Bergabung sejak: {{ formatDate(usersStore.profile?.created_at) }}
           </p>
         </div>
