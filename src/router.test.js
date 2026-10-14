@@ -7,11 +7,19 @@ describe("router", () => {
     vi.restoreAllMocks();
   });
 
-  it("should have correct routes definition", () => {
+  it("should have correct routes definition", async () => {
     expect(routes).toHaveLength(3);
     expect(routes[0].path).toBe("/auth");
     expect(routes[1].path).toBe("/");
     expect(routes[2].path).toBe("/:pathMatch(.*)*");
+
+    const loaders = routes
+      .flatMap((r) => [
+        r.component,
+        ...(r.children ? r.children.map((c) => c.component) : []),
+      ])
+      .filter((c) => typeof c === "function");
+    await Promise.all(loaders.map((loader) => loader()));
   });
 
   it("should redirect unauthenticated users to /auth/login", async () => {

@@ -28,6 +28,29 @@ export default defineConfig(({ mode }) => {
         env.VITE_DELCOM_BASEURL || "https://open-api.delcom.org/api/v1"
       ),
     },
+    build: {
+      target: "esnext",
+      sourcemap: true,
+      chunkSizeWarningLimit: 1500,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules")) {
+              if (id.includes("@toast-ui")) {
+                return "toast-ui";
+              }
+              if (id.includes("sweetalert2")) {
+                return "sweetalert2";
+              }
+              if (id.includes("lucide-vue-next")) {
+                return "lucide";
+              }
+              return "vendor";
+            }
+          },
+        },
+      },
+    },
     test: {
       globals: true,
       environment: "jsdom",
